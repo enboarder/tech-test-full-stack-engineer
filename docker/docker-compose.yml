@@ -1,0 +1,65 @@
+version: '3.4'
+
+x-db-variables: &db-variables
+  MYSQL_DATABASE: mission-control
+  MYSQL_USER: spaceman
+  MYSQL_PASSWORD: vacuum
+
+x-shared-env: &shared-env
+  NODE_ENV: 'development'
+  IS_DOCKER: 'true'
+  CHOKIDAR_USEPOLLING: 'true'
+
+services:
+
+  client:
+    build:
+      context: ../client
+    volumes:
+      - ../client:/var/lib/client:delegated
+      - /var/lib/client/node_modules/ 
+    ports:
+    - '3000:3000'
+    environment:
+      <<: *shared-env
+    container_name: client
+    tty: true
+    networks:
+      - frontend
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3306:3306'
+    restart: always
+    environment:
+      <<: *db-variables
+    env_file:
+      - '../db/db_root.env'
+    container_name: db
+    volumes:
+      - ../db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend
+
+  server:
+    depends_on:
+      - db
+    build:
+      context: ../server
+    volumes:
+      - ../server:/var/lib/server:delegated
+      - /var/lib/server/node_modules/
+    ports:
+      - '4000:4000'
+    environment:
+      <<: *shared-env
+      <<: *db-variables
+    container_name: server
+    networks:
+      - backend
+
+networks:
+    backend:
+    frontend:

@@ -6,7 +6,7 @@ import { apiUrl } from '../constants'
 
 const onClickCapsules = (e, onUpdateCapsules) => {
     e.preventDefault()
-    axios.get(`${host}/capsules`)
+    axios.get(`${apiUrl}/capsules`)
         .then(({ data: { result } }) => {
             onUpdateCapsules(JSON.parse(result))
         })

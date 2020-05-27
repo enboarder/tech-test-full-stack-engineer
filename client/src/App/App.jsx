@@ -6,7 +6,7 @@ import { Application } from './styles';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import Capsules from './capsules';
 import MainDisplay from './main-display'
-
+import LandingPads from './landing-pads'
 
 const Interface = () => (
     <>
@@ -16,13 +16,6 @@ const Interface = () => (
     </>
 )
 
-const LandingPads = () => (
-    <div className="outer-border">
-        <p>
-            landing pads text input and button goes here
-        </p>
-    </div>
-)
 
 const App = () => (
     <>

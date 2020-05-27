@@ -10,7 +10,7 @@ const MainDisplay = ({ store: { capsules, display, launchPad } }) => (
                 </p>
             )}
             {display === 'CAPSULES' && <PrettyJson data={capsules} heading="Capsules" />}
-            {display === 'LAUNCH_PADS' && <PrettyJson data={launchPad} heading="Launch Pad" />}
+            {display === 'LAUNCH_PAD' && <PrettyJson data={launchPad} heading="Launch Pad" />}
         </div>
 )
 

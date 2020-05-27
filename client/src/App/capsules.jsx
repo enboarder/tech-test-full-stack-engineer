@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-const host = 'http://localhost:4000'
+import { apiUrl } from '../constants'
 
 const onClickCapsules = (e, onUpdateCapsules) => {
     e.preventDefault()

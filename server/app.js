@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const https = require('https');
 
 const app = express();
-const baseUrl = 'https://api.spacexdata.com/v3'
+const baseUrl = 'https://api.spacexdata.com/v3';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -18,6 +18,7 @@ app.get('/', async (_req, res) => {
 });
 
 app.get('/capsules', async (_req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     let data = '';
 
     https.get(baseUrl + '/capsules', (resp) => {
@@ -38,6 +39,8 @@ app.get('/capsules', async (_req, res) => {
 });
 
 app.get('/landpads/:id', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
     const { params: { id } } = req;
     let data = '';
 

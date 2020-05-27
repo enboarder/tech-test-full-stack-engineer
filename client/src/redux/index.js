@@ -4,13 +4,38 @@ const { NODE_ENV } = process.env;
 const isDevelopment = NODE_ENV === 'development';
 
 const reducers = {
-    spaceData: (oldState = {}, action) => {
-        const { type } = action;
+    spaceData: (oldState = {}, { type }) => {
         switch (type) {
             default:
                 return oldState;
         }
     },
+    capsules: (oldState = [], { type, capsules }) => {
+        switch(type) {
+            case 'UPDATE_CAPSULES':
+                return capsules.sort((a, b) => a.original_launch_unix > b.original_launch_unix);
+            default:
+                return oldState;
+        }
+    },
+    launchPad: (oldState = [], { type, launchPad }) => {
+        switch(type) {
+            case 'UPDATE_LAUNCH_PAD':
+                return launchPad;
+            default:
+                return oldState;
+        }
+    },
+    display: (_oldState, { type }) => {
+        switch(type) {
+            case 'UPDATE_CAPSULES':
+                return 'CAPSULES';
+            case 'UPDATE_LAUNCH_PAD':
+                return 'LAUNCH_PAD';
+            default:
+                return '';
+        }
+    }
 };
 
 const slices = combineReducers({ ...reducers });

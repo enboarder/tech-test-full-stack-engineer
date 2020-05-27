@@ -6,7 +6,7 @@ const MainDisplay = ({ store: { capsules, display, launchPad } }) => (
         <div className="main-display outer-border">
             {!display && (
                 <p>
-                    select capsules or a launch site
+                    Please select capsules or a launch site
                 </p>
             )}
             {display === 'CAPSULES' && <PrettyJson data={capsules} heading="Capsules" />}

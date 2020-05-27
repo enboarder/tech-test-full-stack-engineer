@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import { apiUrl } from '../constants'
 
@@ -9,7 +10,7 @@ const onClickLaunchPad = (e, onUpdateLaunchPad, input) => {
 
     axios.get(`${apiUrl}/landpads/${input}`)
         .then(({ data: { result } }) => {
-            onUpdateLaunchPad(JSON.parse(result))
+            onUpdateLaunchPad(result)
         })
 }
 
@@ -17,11 +18,10 @@ const validate = (value) => {
     let isValid = true
 
     if (value.length > 14) {
-        console.log('string too long')
         isValid = false
     }
 
-    const forbiddenChars = ['#', '$', '%', '&']
+    const forbiddenChars = ['#', '$', '%', '&', ' ']
     forbiddenChars.forEach(char => {
         if(value.includes(char)) {
             isValid = false
@@ -31,8 +31,19 @@ const validate = (value) => {
     return isValid
 }
 
+const Form = styled.form`
+    button {
+        margin-right: 10px;
+    }
+
+    input {
+        margin-right: 10px;
+    }
+`
+
 const LandingPads = ({ onUpdateLaunchPad }) => {
     const [input, setInput] = useState('')
+    const [valid, setValid] = useState(true)
 
     const handleInputChange = e => {
         const { currentTarget: { value } } = e
@@ -41,18 +52,26 @@ const LandingPads = ({ onUpdateLaunchPad }) => {
 
         if(isValid) {
             setInput(value)
+            if(!valid) {
+                setValid(true)
+            }
+        } else {
+            if(valid) {
+                setValid(false)
+            }
         }
     }
 
     return (
         <div className="outer-border">
-            <form onSubmit={e => onClickLaunchPad(e, onUpdateLaunchPad, input)}>
+            <Form onSubmit={e => onClickLaunchPad(e, onUpdateLaunchPad, input)}>
                 <button>
                     Landing Pad
                 </button>
 
                 <input type="text" value={input} onChange={handleInputChange} />
-            </form>
+                {!valid && (<label>Please enter a valid value</label>)}
+            </Form>
         </div>
     )
 }

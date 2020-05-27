@@ -8,7 +8,7 @@ const onClickCapsules = (e, onUpdateCapsules) => {
     e.preventDefault()
     axios.get(`${apiUrl}/capsules`)
         .then(({ data: { result } }) => {
-            onUpdateCapsules(JSON.parse(result))
+            onUpdateCapsules(result)
         })
 }
 

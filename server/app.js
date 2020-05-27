@@ -28,7 +28,7 @@ app.get('/capsules', async (_req, res) => {
 
         resp.on('end', () => {
             res.send({
-                result: data
+                result: JSON.parse(data)
             })
         });
     }).on("error", (err) => {
@@ -50,8 +50,10 @@ app.get('/landpads/:id', async (req, res) => {
         });
 
         resp.on('end', () => {
+            const parsedData = JSON.parse(data)
+            const { id, full_name, status, location } = parsedData
             res.send({
-                result: data
+                result: { id, full_name, status, location }
             })
         });
     }).on("error", (err) => {

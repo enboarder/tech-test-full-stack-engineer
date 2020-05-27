@@ -14,6 +14,12 @@ const GlobalStyle = createGlobalStyle`
       margin: 5px;
     }
   }
+
+  button {
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+  }
 `;
 
 export default GlobalStyle;

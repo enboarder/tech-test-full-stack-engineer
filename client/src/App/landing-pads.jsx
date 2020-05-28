@@ -32,12 +32,13 @@ const validate = (value) => {
 }
 
 const Form = styled.form`
-    button {
-        margin-right: 10px;
+    display: flex;
+    @media (max-width: 800px) {
+        flex-direction: column
     }
-
-    input {
-        margin-right: 10px;
+    @media (min-width: 800px) {
+        flex-direction: column
+        justify-content: space-between;
     }
 `
 
@@ -63,16 +64,14 @@ const LandingPads = ({ onUpdateLaunchPad }) => {
     }
 
     return (
-        <div className="outer-border">
-            <Form onSubmit={e => onClickLaunchPad(e, onUpdateLaunchPad, input)}>
-                <button>
-                    Landing Pad
-                </button>
+        <Form onSubmit={e => onClickLaunchPad(e, onUpdateLaunchPad, input)}>
+            <input type="text" value={input} onChange={handleInputChange} />
 
-                <input type="text" value={input} onChange={handleInputChange} />
-                {!valid && (<label>Please enter a valid value</label>)}
-            </Form>
-        </div>
+            <button>
+                Landing Pad
+            </button>
+
+        </Form>
     )
 }
 

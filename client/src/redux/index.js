@@ -13,7 +13,11 @@ const reducers = {
     capsules: (oldState = [], { type, capsules }) => {
         switch(type) {
             case 'UPDATE_CAPSULES':
-                return capsules.sort((a, b) => a.original_launch_unix > b.original_launch_unix);
+                if (Array.isArray(capsules)) {
+                    return capsules.sort((a, b) => a.original_launch_unix > b.original_launch_unix);
+                } else {
+                    return capsules;
+                }
             default:
                 return oldState;
         }

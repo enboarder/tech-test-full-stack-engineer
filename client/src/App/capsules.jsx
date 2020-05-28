@@ -13,11 +13,9 @@ const onClickCapsules = (e, onUpdateCapsules) => {
 }
 
 const Capsules = ({ onUpdateCapsules }) => (
-    <div className="outer-border">
-        <button onClick={e => onClickCapsules(e, onUpdateCapsules)}>
-            Capsules
-        </button>
-    </div>
+    <button onClick={e => onClickCapsules(e, onUpdateCapsules)}>
+        Capsules
+    </button>
 )
 
 const mapDispatchToProps = dispatch => {

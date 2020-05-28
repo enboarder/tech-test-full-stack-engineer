@@ -12,7 +12,6 @@ const Application = styled.div`
         flex-direction: column;
         width: 50%;
         height: 50%;
-        font-family: Arial;
     }
     @media (max-width: 800px) {
         flex-direction: row;

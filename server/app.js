@@ -29,12 +29,19 @@ app.get('/capsules', async (_req, res) => {
         resp.on('end', () => {
             res.send({
                 result: JSON.parse(data)
-            })
+            });
         });
     }).on("error", (err) => {
         res.send({
             result: "Error: " + err.message
-        })
+        });
+    });
+});
+
+app.get('/landpads', async (_req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.send({
+        result: "Error: please enter a launch pad id"
     });
 });
 
@@ -53,28 +60,28 @@ app.get('/landpads/:id', async (req, res) => {
             });
 
             resp.on('end', () => {
-                const parsedData = JSON.parse(data)
-                const { id, full_name, status, location } = parsedData
-                const newEntry = JSON.stringify({ full_name, status, location })
+                const parsedData = JSON.parse(data);
+                const { id, full_name, status, location } = parsedData;
+                const newEntry = JSON.stringify({ full_name, status, location });
 
-                dbPool.query(`INSERT INTO spaceData (id, spaceItem) VALUES ('${id}', '${newEntry}')`)
+                dbPool.query(`INSERT INTO spaceData (id, spaceItem) VALUES ('${id}', '${newEntry}')`);
                 res.send({
                     result: { id, full_name, status, location }
-                })
+                });
             });
         }).on("error", (err) => {
             res.send({
                 result: "Error: " + err.message
-            })
+            });
         });
     } else {
         // Result found in DB, so sending that
-        const { spaceItem, id } = rows[0]
-        const { full_name, status, location } = JSON.parse(spaceItem)
+        const { spaceItem, id } = rows[0];
+        const { full_name, status, location } = JSON.parse(spaceItem);
         res.send({
             result: { id, full_name, status, location }
-        })
-    }
+        });
+    };
 });
 
 app.listen('4000');

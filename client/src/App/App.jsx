@@ -6,8 +6,8 @@ import GlobalStyle from '../theme';
 import { Application } from './styles';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import Capsules from './capsules';
-import MainDisplay from './main-display'
-import LandingPads from './landing-pads'
+import MainDisplay from './main-display';
+import LandingPads from './landing-pads';
 
 const Interface = () => {
     const Wrapper = styled.div`
@@ -16,12 +16,12 @@ const Interface = () => {
         padding: 5px;
         align-items: center;
         @media (min-width: 800px) {
-            flex-direction: row
+            flex-direction: row;
         }
         @media (max-width: 800px) {
-            flex-direction: column
+            flex-direction: column;
         }
-    `
+    `;
 
     return (
         <Wrapper>
@@ -29,9 +29,8 @@ const Interface = () => {
             <Rocket />
             <LandingPads />
         </ Wrapper>
-    )
-
-}
+    );
+};
 
 
 const App = () => (

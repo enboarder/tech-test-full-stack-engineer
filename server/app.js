@@ -40,27 +40,41 @@ app.get('/capsules', async (_req, res) => {
 
 app.get('/landpads/:id', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
     const { params: { id } } = req;
-    let data = '';
 
-    https.get(`${baseUrl}/landpads/${id}`, (resp) => {
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
+    const rows = await dbPool.query(`SELECT * FROM spaceData WHERE id = '${id}'`);
 
-        resp.on('end', () => {
-            const parsedData = JSON.parse(data)
-            const { id, full_name, status, location } = parsedData
+    if (rows.length === 0) {
+        // no entry found, so need to get data from SpaceX API
+        let data = '';
+        https.get(`${baseUrl}/landpads/${id}`, (resp) => {
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            resp.on('end', () => {
+                const parsedData = JSON.parse(data)
+                const { id, full_name, status, location } = parsedData
+                const newEntry = JSON.stringify({ full_name, status, location })
+
+                dbPool.query(`INSERT INTO spaceData (id, spaceItem) VALUES ('${id}', '${newEntry}')`)
+                res.send({
+                    result: { id, full_name, status, location }
+                })
+            });
+        }).on("error", (err) => {
             res.send({
-                result: { id, full_name, status, location }
+                result: "Error: " + err.message
             })
         });
-    }).on("error", (err) => {
+    } else {
+        // Result found in DB, so sending that
+        const { spaceItem, id } = rows[0]
+        const { full_name, status, location } = JSON.parse(spaceItem)
         res.send({
-            result: "Error: " + err.message
+            result: { id, full_name, status, location }
         })
-    });
+    }
 });
 
 app.listen('4000');

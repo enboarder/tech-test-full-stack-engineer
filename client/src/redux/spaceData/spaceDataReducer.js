@@ -41,10 +41,11 @@ const reducer = (state = initialState, action) => {
         errorMessage: payload.errorMessage,
       };
     case FETCH_LANDING_PAD_SUCCESS:
-      const { landingPad } = payload;
+      const landingPad = payload;
+      console.log(landingPad);
       return {
         ...state,
-        isCurrCapsuleFetchSuccess: true,
+        isLandingPadFetchSuccess: true,
         isShowAllCapsulesMode: false,
         landingPad,
         isFetchingInProgress: false,
@@ -52,7 +53,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_LANDING_PAD_FAILURE:
       return {
         ...state,
-        isCurrCapsuleFetchSuccess: false,
+        isLandingPadFetchSuccess: false,
         isShowAllCapsulesMode: false,
         landingPad: null,
         isFetchingInProgress: false,

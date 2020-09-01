@@ -31,25 +31,21 @@ const fetchLandingPadFailure = (errorMessage) => ({
 export const fetchLandingPad = (landingPadId) => async (dispatch) => {
   try {
     dispatch(showInProgress());
-    const landingPad = await axios.get(
+    const { data } = await axios.get(
       `${ServiceEnpoint.LANDING_PAD}/${landingPadId}`
     );
-    dispatch(fetchLandingPadSuccess(landingPad));
+    dispatch(fetchLandingPadSuccess(data));
   } catch (error) {
-    dispatch(fetchLandingPadFailure(error.message));
+    dispatch(fetchLandingPadFailure(error.response.data.message));
   }
 };
 
 export const fetchAllCapsules = () => async (dispatch) => {
   try {
     dispatch(showInProgress());
-
-    const response = await axios.get(ServiceEnpoint.ALL_CAPSULES);
-    
-    const capsules = response.data;
-    
-    dispatch(fetchAllCapsulesSuccess(capsules));
+    const { data } = await axios.get(ServiceEnpoint.ALL_CAPSULES);
+    dispatch(fetchAllCapsulesSuccess(data));
   } catch (error) {
-    dispatch(fetchAllCapsulesFailure(error.message));
+    dispatch(fetchAllCapsulesFailure(error.response.data.message));
   }
 };

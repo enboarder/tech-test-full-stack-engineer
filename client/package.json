@@ -21,10 +21,12 @@
         "@hot-loader/react-dom": "16.13.0",
         "axios": "0.19.2",
         "customize-cra": "0.9.1",
+        "light-toast": "^0.3.0",
         "react": "16.13.1",
         "react-dom": "16.13.1",
+        "react-json-pretty": "^2.2.0",
         "react-redux": "7.2.0",
-        "react-scripts": "3.4.1",
+        "react-scripts": "^3.4.3",
         "redux": "4.0.5",
         "redux-thunk": "2.3.0",
         "styled-components": "5.0.1"

@@ -1,19 +1,11 @@
-import { createStore, combineReducers, compose } from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
+import spaceData from './spaceData/spaceDataReducer';
 
 const { NODE_ENV } = process.env;
 const isDevelopment = NODE_ENV === 'development';
 
-const reducers = {
-    spaceData: (oldState = {}, action) => {
-        const { type } = action;
-        switch (type) {
-            default:
-                return oldState;
-        }
-    },
-};
-
-const slices = combineReducers({ ...reducers });
+const slices = combineReducers({ spaceData});
 
 const  composeEnhancers = isDevelopment && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
@@ -22,7 +14,7 @@ const  composeEnhancers = isDevelopment && window.__REDUX_DEVTOOLS_EXTENSION_COM
 
 const store = createStore(
     slices,
-    composeEnhancers(),
+    composeEnhancers(applyMiddleware(thunk))
 );
 
 export default store;

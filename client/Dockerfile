@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:16-alpine
 COPY . /var/lib/client/
 WORKDIR /var/lib/client
 RUN npm install

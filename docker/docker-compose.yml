@@ -54,8 +54,7 @@ services:
     ports:
       - '4000:4000'
     environment:
-      <<: *shared-env
-      <<: *db-variables
+       <<: [*shared-env, *db-variables]
     container_name: server
     networks:
       - backend

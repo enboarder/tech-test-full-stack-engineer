@@ -27,3 +27,5 @@ From the docker folder of the project, run `docker-compose up -d`
 **The time recommended is 1-2 hours, try not to spend longer than that, we don’t want you to waste a precious day of your life over this. More importantly, you do not necessarily need to complete every point, we want to see how you work and how far you get, we are not actually sending rockets into space (not yet).**
 
 **Please commit your code to Github and share the link with us.**
+
+**Note: this submission must be your own work. Do not copy / paste or use AI.**

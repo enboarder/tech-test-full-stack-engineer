@@ -15,8 +15,10 @@
         "i": "^0.3.7",
         "morgan": "^1.10.0",
         "mysql2": "^3.6.0",
+        "node-cron": "^3.0.2",
         "node-fetch": "^2.6.12",
         "ramda": "^0.29.0",
+        "redis": "^4.6.7",
         "sequelize": "^6.32.1"
     },
     "devDependencies": {

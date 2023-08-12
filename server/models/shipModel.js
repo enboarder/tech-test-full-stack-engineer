@@ -17,10 +17,7 @@ const Ship = sequelize.define('ship', {
 		shipName: DataTypes.STRING,
         class: DataTypes.STRING,
         icon: DataTypes.STRING,
-		ttl: {
-			type: DataTypes.DATE,
-			defaultValue: DataTypes.NOW
-		}
+		ttl: DataTypes.INTEGER
   	},
 	{
 		indexes: [

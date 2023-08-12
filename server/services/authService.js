@@ -1,6 +1,5 @@
 class Auth {
     async validateToken(req, res, next) {
-        console.log('validateToken', req.headers)
         let token = null
         if (req.headers.hasOwnProperty('authorization')) {
           token = req.get('authorization').replace('Bearer ', '')

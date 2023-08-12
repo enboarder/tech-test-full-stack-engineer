@@ -1,23 +1,26 @@
 const shipModels = require('../models/shipModel');
 const spaceX = require('./integrationService');
 const { isEmpty } = require('ramda')
+const { Op } = require("sequelize");
 
 class Ship {
     async initialLoadData() {
         const existingData = await this.searchAll();
-        console.log('--existingData', existingData.length)
+
         if (!existingData.length) {
             const externalData = await spaceX.getAll();
             await Promise.all(externalData.map((data) => {
-                console.log('looop', data);
+
                 const { ship_id, ship_name, ship_type, weight_kg, home_port } = data;
+                const ttl = Math.ceil(Date.now() / 1000) + 24 * 3600;
                 return this.createShip({
                     shipId: ship_id,
                     shipType:ship_type,
                     weight: weight_kg,
                     homePort: home_port,
                     shipName: ship_name,
-                    class: weight_kg && weight_kg > 400000 ? 'heavy' : 'light'
+                    class: weight_kg && weight_kg > 400000 ? 'heavy' : 'light',
+                    ttl
                 })
             }));
         }
@@ -26,7 +29,7 @@ class Ship {
     async createShip(params) {
         await shipModels.create(
             params,
-            { fields: ['shipId', 'shipType', 'weight', 'homePort', 'shipName', 'class', 'icon'] }
+            { fields: ['shipId', 'shipType', 'weight', 'homePort', 'shipName', 'class', 'icon', 'ttl'] }
         );
     }
 
@@ -36,7 +39,7 @@ class Ship {
             limit: parseInt(limit) || 10,
             offset: parseInt(offset) || 0
         };
-        console.log('others', others)
+
         if (!isEmpty(others)) {
             inputParam = {
                 ...inputParam,
@@ -58,6 +61,17 @@ class Ship {
             }
         });
         console.log("update:", data);
+    }
+
+    async cleanUp() {
+        const currentTimestamp = Math.ceil(Date.now() / 1000);
+        await shipModels.destroy({
+            where: {
+                ttl: {
+                    [Op.lte]: currentTimestamp,    
+                } 
+            }
+        })
     }
 }
 

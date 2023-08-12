@@ -1,19 +1,12 @@
-const dbPool = require('./db');
-const express =require('express');
-const bodyParser = require('body-parser');
+require('dotenv').config();
 
-const app = express();
+const app = require('./config/express');
+const ship = require('./services/shipService');
+//const db = require('./config/mysql');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+//db.authenticate();
+ship.initialLoadData();
 
-app.get('/', async (req, res) => {
-    const rows = await dbPool.query('SELECT * FROM spaceData');
-    res.status(200);
-    res.send({
-        result: JSON.stringify(rows)
-    });
+app.listen(process.env.PORT, () => {
+    console.log(`Listening on port: ${process.env.PORT}, wait for the development server to be up...`);
 });
-
-app.listen('4000');
-console.log(`Listening on port: 4000, wait for the development server to be up...`);

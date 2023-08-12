@@ -1,5 +1,6 @@
 const shipModels = require('../models/shipModel');
 const spaceX = require('./integrationService');
+const { isEmpty } = require('ramda')
 
 class Ship {
     async initialLoadData() {
@@ -32,11 +33,11 @@ class Ship {
     async searchAll(params = {}) {
         const { limit, offset, ...others } = params
         let inputParam = {
-            limit: limit || 10,
-            offset: offset || 0
+            limit: parseInt(limit) || 10,
+            offset: parseInt(offset) || 0
         };
-
-        if (others) {
+        console.log('others', others)
+        if (!isEmpty(others)) {
             inputParam = {
                 ...inputParam,
                 where: {
@@ -45,7 +46,8 @@ class Ship {
             };
         }
 
-        const data = await shipModels.findAll( inputParam);
+        console.log('inputParam', inputParam)
+        const data = await shipModels.findAll(inputParam);
         return data
     }
 

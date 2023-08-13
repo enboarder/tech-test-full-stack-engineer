@@ -13,6 +13,6 @@ router
 
 router
   .route('/:id')
-  .put(auth.validateToken, shipController.update);
+  .put(auth.validateToken, validate(validateService.putShipDataValidation), shipController.update);
 
 module.exports = router;

@@ -10,6 +10,13 @@ const getShipDataValidation = {
   }),
 }
 
+const putShipDataValidation = {
+  body: Joi.object({
+    icon: Joi.string()
+  }),
+}
+
 module.exports = {
-    getShipDataValidation
+    getShipDataValidation,
+    putShipDataValidation
 };

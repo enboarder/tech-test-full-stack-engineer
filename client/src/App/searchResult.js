@@ -19,7 +19,7 @@ export default function SearcResult({ data }) {
             <Td>{item.homePort}</Td>
             <Td>{item.shipName}</Td>
             <Td>{item.class}</Td>
-            <Td></Td>
+            <Td><input type="file" id={item.id} accept="image/png, image/jpeg" /></Td>
           </tr>
           ))
         }

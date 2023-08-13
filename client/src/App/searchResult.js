@@ -1,30 +1,26 @@
-export default function SearcResult() {
+export default function SearcResult({ data }) {
     return (
       <table>
-  <caption>
-    Alien football stars
-  </caption>
-  <tr>
-    <th scope="col">Player</th>
-    <th scope="col">Gloobles</th>
-    <th scope="col">Za'taak</th>
-  </tr>
-  <tr>
-    <th scope="row">TR-7</th>
-    <td>7</td>
-    <td>4,569</td>
-  </tr>
-  <tr>
-    <th scope="row">Khiresh Odo</th>
-    <td>7</td>
-    <td>7,223</td>
-  </tr>
-  <tr>
-    <th scope="row">Mia Oolong</th>
-    <td>9</td>
-    <td>6,219</td>
-  </tr>
-</table>
+        <tr>
+          <th scope="col">Ship Type</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Home Port</th>
+          <th scope="col">Ship Name</th>
+          <th scope="col">Class</th>
+          <th scope="col"></th>
+        </tr>
+        {
+          data.map(item => (
+           <tr>
+            <th scope="row">{item.shipType}</th>
+            <td>{item.weight}</td>
+            <td>{item.homePort}</td>
+            <td>{item.shipName}</td>
+            <td>{item.class}</td>
+          </tr>
+          ))
+        }
+    </table>
 
     );
   }

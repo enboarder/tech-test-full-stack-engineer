@@ -1,16 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import queryString from 'query-string';
 
-export default function SearchBar() {
+export default function SearchBar({ handleData }) {
     const [shipType, setShipType] = useState('');
     const [weight, setWeight] = useState('');
     const [homePort, setHomePort] = useState('');
+    const defaultUrl = 'http://localhost:4000/api/v1/ship';
+
+    function fetchData() {
+        const stringified = queryString.stringify({
+            shipType,
+            weight,
+            homePort
+        }, {skipNull: true, skipEmptyString: true});
+        const querySection = stringified ? "?" + stringified : "";
+        console.log(querySection);
+        fetch(defaultUrl + querySection, {
+            method: "GET",
+            headers: { authorization: "Bearer sadfd" }
+        }).then((response) => response.json())
+        .then(({ data }) => handleData(data))
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        setTimeout(() => {
-          alert(`You said ${weight} to ${shipType}`);
-        }, 5000);
+        fetchData();
     }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
       
     return (
       <form onSubmit={handleSubmit}>

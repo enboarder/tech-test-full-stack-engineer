@@ -1,26 +1,29 @@
+import { Table, Th, Td } from './styles';
+
 export default function SearcResult({ data }) {
     return (
-      <table>
+      <Table>
         <tr>
-          <th scope="col">Ship Type</th>
-          <th scope="col">Weight</th>
-          <th scope="col">Home Port</th>
-          <th scope="col">Ship Name</th>
-          <th scope="col">Class</th>
-          <th scope="col"></th>
+          <Th>Ship Type</Th>
+          <Th>Weight</Th>
+          <Th>Home Port</Th>
+          <Th>Ship Name</Th>
+          <Th>Class</Th>
+          <Th></Th>
         </tr>
         {
           data.map(item => (
            <tr>
-            <th scope="row">{item.shipType}</th>
-            <td>{item.weight}</td>
-            <td>{item.homePort}</td>
-            <td>{item.shipName}</td>
-            <td>{item.class}</td>
+            <Td>{item.shipType}</Td>
+            <Td>{item.weight}</Td>
+            <Td>{item.homePort}</Td>
+            <Td>{item.shipName}</Td>
+            <Td>{item.class}</Td>
+            <Td></Td>
           </tr>
           ))
         }
-    </table>
+    </Table>
 
     );
   }

@@ -1,4 +1,5 @@
 version: '3.4'
+name: 'enboarder-full-stack-tech-test'
 
 x-db-variables: &db-variables
   MYSQL_DATABASE: mission-control
@@ -9,25 +10,25 @@ x-shared-env: &shared-env
   NODE_ENV: 'development'
   IS_DOCKER: 'true'
   CHOKIDAR_USEPOLLING: 'true'
+  DB_CONTAINER: 'db_enboarder'
 
 services:
-
-  client:
+  client_enboarder:
+    image: enboarder-full-stack-tech-test_client
     build:
       context: ../client
     volumes:
       - ../client:/var/lib/client:delegated
-      - /var/lib/client/node_modules/ 
     ports:
     - '3000:3000'
     environment:
       <<: *shared-env
-    container_name: client
+    container_name: client_enboarder
     tty: true
     networks:
       - frontend
 
-  db:
+  db_enboarder:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     ports:
@@ -37,25 +38,25 @@ services:
       <<: *db-variables
     env_file:
       - '../db/db_root.env'
-    container_name: db
+    container_name: db_enboarder
     volumes:
       - ../db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - backend
 
-  server:
+  server_enboarder:
     depends_on:
-      - db
+      - db_enboarder
+    image: enboarder-full-stack-tech-test_server
     build:
       context: ../server
     volumes:
       - ../server:/var/lib/server:delegated
-      - /var/lib/server/node_modules/
     ports:
       - '4000:4000'
     environment:
        <<: [*shared-env, *db-variables]
-    container_name: server
+    container_name: server_enboarder
     networks:
       - backend
 

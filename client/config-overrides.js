@@ -1,18 +1,27 @@
 const { override } = require('customize-cra');
-const rewireReactHotLoader = require('react-app-rewire-hot-loader');
+const webpack = require('webpack');
 
 module.exports = {
     webpack: override(
         (config, env) => {
-            config = rewireReactHotLoader(config, env);
             config.resolve = {
                 extensions: ['.js', '.jsx'],
                 symlinks: false,
                 alias: {
-                    ...config.resolve.alias,
-                    'react-dom': '@hot-loader/react-dom',
+                    ...config.resolve.alias
                 }
             };
+
+            config.devServer = {
+                ...config.devServer,
+                hot: true
+            };
+
+            config.plugins = [
+                ...config.plugins,
+                new webpack.HotModuleReplacementPlugin()
+            ];
+
             return config;
         }
     )

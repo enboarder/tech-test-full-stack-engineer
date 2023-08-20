@@ -21,7 +21,7 @@ We have provided a bit of boilerplate code that you can use to get started. You 
 
 The boilerplate code assumes you have Docker running on your machine. If you do not, they offer easy to install binaries ([Mac](https://docs.docker.com/docker-for-mac/install/)) ([Windows](https://docs.docker.com/docker-for-windows/install/)).
 
-First you will need to install the dependencies using npm. The starter project has been structured to separate the browser application and the server application into separate folders. To install the dependencies for both applications, run the `npm intall` command from the "client" and "server" folders respectively
+First you will need to install the dependencies using npm. The starter project has been structured to separate the browser application and the server application into separate folders. To install the dependencies for both applications, run the `npm install` command from the "client" and "server" folders respectively
 
 To run the project, use a cli tool to open the "docker" folder within the project, then run `docker compose up -d`
 * You should now have the UI running at http://localhost:3000 and the server running at http://localhost:4000

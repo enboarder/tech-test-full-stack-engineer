@@ -16,7 +16,7 @@ The dashboard has the following requirements:
 * If a record is not found in the database, call the SpaceX API and store it in the database
 * The API must also be able to filter the response based on the ship type, weight and home port (pagination is a bonus)
 * All API endpoints should be secure from typical threats such as malicious headers and XSS.
-* Validations the input data contained in the reqest for each endpoint.
+* Validate the input data contained in the request for each endpoint.
 * An icon upload route which accepts an image file (only jpg, jpeg, png allowed and upto size 100kb), and saves it to a ship, the icon should also be returned in the API route that fetches the list of ships.
 ​
 ## Bonus points:

@@ -1,0 +1,24 @@
+button {
+    color: white;
+    border: 8px solid green;
+    width: 100px;
+    background-color: green;  
+    border-radius: 8px; 
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:disabled {
+    cursor: not-allowed;
+  }

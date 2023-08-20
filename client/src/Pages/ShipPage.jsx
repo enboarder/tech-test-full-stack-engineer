@@ -1,132 +1,88 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import Pagination from '../components/Pagination';
+import { isValidStringType, isValidNumType } from '../utils/inputValidation';
 import ShipTableComponent from '../components/ShipTable';
+import { handleSearch, handleUploadIcon } from '../apis/shipService';
 import './ShipPage.css';
+import { SHIP_LIMIT } from '../constants/pagination';
 
 const ShipPage = () => {
   const [ships, setShips] = useState([]);
-  const [shipType, setShipType] = useState('');
-  const [homePort, setHomePort] = useState('');
-  const [weight, setWeight] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleSearch = async (page = 1) => {
-    try {
-      // Construct the query parameters based on user input
-      const queryParams = {};
+  const shipTypeRef = useRef('');
+  const homePortRef = useRef('');
+  const weightRef = useRef('');
 
-      queryParams.page = page; // Add the page parameter
+  const constructQueryParams = () => {
+    const queryParams = {
+      page: 1,
+    };
 
-      // Ship Type: Should contain only letters and spaces
-      if (shipType && /^[A-Za-z\s]+$/.test(shipType)) {
-        queryParams.shipType = shipType;
-      }
-
-      // Home Port: Should contain only letters, spaces, and dashes
-      if (homePort && /^[A-Za-z\s\-]+$/.test(homePort)) {
-        queryParams.homePort = homePort;
-      }
-
-      // Weight: Should be a valid number
-      if (weight && /^\d+$/.test(weight)) {
-        queryParams.weight = weight;
-      }
-
-      const queryString = Object.keys(queryParams)
-        .map((key) => `${key}=${queryParams[key]}`)
-        .join('&');
-
-      const response = await fetch(
-        `http://localhost:4000/ships?${queryString}`
-      );
-      const data = await response.json();
-
-      if (data.ships) {
-        setShips(data.ships);
-        setCurrentPage(page);
-      }
-    } catch (error) {
-      console.error('Error fetching ships:', error);
+    const shipType = shipTypeRef?.current?.value;
+    if (shipType && isValidStringType(shipType)) {
+      queryParams.shipType = shipType;
     }
+
+    const homePort = homePortRef?.current?.value;
+    if (homePort && isValidStringType(homePort)) {
+      queryParams.homePort = homePort;
+    }
+
+    const weight = weightRef?.current?.value;
+    if (weight && isValidNumType(weight)) {
+      queryParams.weight = weight;
+    }
+
+    return queryParams;
   };
 
-  const handleUploadIcon = async (shipId, file) => {
-    try {
-      if (file.size <= 100 * 1024) {
-        // Maximum size of 100KB (100 * 1024 bytes)
-        const formData = new FormData();
-        formData.append('image', file);
+  const handleSearchClick = async () => {
+    const queryParams = constructQueryParams();
+    const newShips = await handleSearch(queryParams);
+    setShips(newShips);
+    setCurrentPage(1);
+  };
 
-        const response = await fetch(
-          `http://localhost:4000/ships/upload/${shipId}`,
-          {
-            method: 'POST',
-            body: formData,
-          }
-        );
+  const handleIconUpload = async (shipId, file) => {
+    await handleUploadIcon(shipId, file);
+  };
 
-        if (response.ok) {
-          alert('File upload success'); // Convert the response to a Blob
-        } else {
-          console.error('Error uploading icon. Status:', response.status);
-        }
-      } else {
-        alert('Please select a file that is 100KB or smaller.');
-      }
-    } catch (error) {
-      console.error('Error uploading icon:', error);
+  const handlePageChange = async (newPage) => {
+    if (newPage >= 1) {
+      setCurrentPage(newPage);
+      const queryParams = constructQueryParams();
+      queryParams.page = newPage;
+      const newShips = await handleSearch(queryParams);
+      setShips(newShips);
     }
   };
 
   return (
-    <div>
+    <div style={{ paddingTop: '48px' }}>
       <div className="margins">
         <label>Ship Type</label>
-        <input
-          type="text"
-          value={shipType}
-          style={{ marginLeft: '28px' }}
-          onChange={(e) => setShipType(e.target.value)}
-        />
+        <input type="text" ref={shipTypeRef} style={{ marginLeft: '28px' }} />
       </div>
       <div className="margins">
         <label>Home Port</label>
-        <input
-          type="text"
-          value={homePort}
-          style={{ marginLeft: '22px' }}
-          onChange={(e) => setHomePort(e.target.value)}
-        />
+        <input type="text" ref={homePortRef} style={{ marginLeft: '22px' }} />
       </div>
       <div className="margins">
         <label>Weight</label>
-        <input
-          type="text"
-          value={weight}
-          style={{ marginLeft: '48px' }}
-          onChange={(e) => setWeight(e.target.value)}
-        />
+        <input type="number" ref={weightRef} style={{ marginLeft: '48px' }} />
         <div className="buttons">
-          <button onClick={() => handleSearch(1)}>Search</button>
+          <button onClick={handleSearchClick}>Search</button>
         </div>
       </div>
-      <h2 style={{ marginLeft: '48px' }}>Ship List</h2>
-      <ShipTableComponent ships={ships} onUploadIcon={handleUploadIcon} />
+      <ShipTableComponent ships={ships} onUploadIcon={handleIconUpload} />
       {ships.length > 0 && (
-        <div className="pagination">
-          <button
-            onClick={() => handleSearch(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <span>Page {currentPage}</span>
-          <button
-            onClick={() => handleSearch(currentPage + 1)}
-            disabled={ships.length - 9 < 1} // Disable if no more results for next page
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+          hasNextPage={ships.length > SHIP_LIMIT}
+          hasPreviousPage={currentPage > 1}
+        />
       )}
     </div>
   );

@@ -1,0 +1,56 @@
+.margins {
+    margin-bottom: 16px;
+    margin-left: 48px;
+}
+
+.label-fonts {
+    font: 800
+}
+
+.inputs {
+    height: 24px;
+    border: '4px solid';
+}
+
+.buttons {
+    width: 100px;
+    margin-top: 16px;
+}
+
+button {
+    color: white;
+    border: 2px solid green;
+    width: 100px;
+    background-color: green;  
+    border-radius: 8px; 
+}
+
+@media (min-width: 720px) {
+    .buttons {
+        margin-left: 48px;
+        margin-right: 48px;
+        display: inline-block;
+        margin-left: 100px;
+        margin-top: 0px;
+    }
+}
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:disabled {
+    cursor: not-allowed;
+  }
+  

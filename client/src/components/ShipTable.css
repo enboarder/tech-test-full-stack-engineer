@@ -1,0 +1,87 @@
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 48px;
+    overflow-x: auto;
+    margin-left: 24px;
+    margin-right: 24px;
+    @media (min-width: '720px') {
+      margin-left: 48px;
+      margin-right: 48px;
+    }
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    border-collapse: collapse;
+    min-width: 100%;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  button {
+    padding: 6px 12px;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .green {
+    background-color: green;
+  }
+  
+  .red {
+    background-color: red;
+  }
+
+  .file-upload-label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .file-upload-label input[type='file'] {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .file-upload-label::before {
+    content: 'Upload Icon';
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 400;
+  }
+  
+  .file-upload-label:hover::before {
+    background-color: #0056b3;
+  }
+  
+  

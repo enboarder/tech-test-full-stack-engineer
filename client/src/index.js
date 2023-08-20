@@ -1,4 +1,3 @@
-import 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,10 +13,3 @@ const render = Component => {
 };
 
 render(App);
-
-if (module.hot) {
-    module.hot.accept('./App', () => {
-        const NextApp = require('./App').default;
-        render(NextApp);
-    });
-}

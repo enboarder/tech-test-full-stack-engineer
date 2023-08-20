@@ -14,24 +14,21 @@
         ]
     },
     "scripts": {
-        "start": "react-app-rewired start",
+        "start": "react-app-rewired --openssl-legacy-provider start",
         "build": "react-app-rewired build"
     },
     "dependencies": {
-        "@hot-loader/react-dom": "16.13.0",
-        "axios": "0.19.2",
-        "customize-cra": "0.9.1",
-        "react": "16.13.1",
-        "react-dom": "16.13.1",
-        "react-redux": "7.2.0",
-        "react-scripts": "3.4.1",
-        "redux": "4.0.5",
-        "redux-thunk": "2.3.0",
-        "styled-components": "5.0.1"
+        "axios": "1.4.0",
+        "customize-cra": "1.0.0",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-redux": "8.1.2",
+        "react-scripts": "5.0.1",
+        "redux": "4.2.1",
+        "redux-thunk": "2.4.2",
+        "styled-components": "6.0.7"
     },
     "devDependencies": {
-        "react-app-rewire-hot-loader": "2.0.1",
-        "react-app-rewired": "2.1.5",
-        "react-hot-loader": "4.12.19"
+        "react-app-rewired": "2.2.1"
     }
 }

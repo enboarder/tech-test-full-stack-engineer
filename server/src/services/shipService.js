@@ -1,8 +1,15 @@
 const axios = require('axios');
+const axiosRetry = require('axios-retry');
 const dbPool = require('../db');
 const cacheMiddleware = require('../middleware/cacheMiddleware');
 const cron = require('node-cron');
 const uuid = require('uuid');
+
+// Configure axios to use retry functionality
+axiosRetry(axios, {
+  retries: 3, // Number of retry attempts
+  retryDelay: axiosRetry.exponentialDelay, // Exponential delay between retries
+});
 
 const shipService = {
   fetchShipsFromSpaceXAPI: async () => {
@@ -66,11 +73,11 @@ const shipService = {
     ]);
     let connection;
     try {
-      cacheMiddleware.cacheData('ship', ships);
       connection = await dbPool.beginTransactionAsync();
       const insertQuery =
         'INSERT INTO spaceData (id, shipId, shipType, weight, homePort, shipName, class) VALUES ?';
       connection.query(insertQuery, [values]);
+      cacheMiddleware.cacheData('ships', ships);
       await connection.commit();
       console.log('data inserted successfully');
     } catch (e) {
@@ -113,6 +120,8 @@ const shipService = {
 
   deleteAndInsetRecordsInDatabaseAndCache: async (ships) => {
     try {
+      // no need to put transaction around delete.
+      // It's acceptable just for delete operation to succeed
       const deleteQuery = 'DELETE FROM spaceData';
       await dbPool.query(deleteQuery);
       await shipService.insertRecordsInDatabaseAndCache(ships);

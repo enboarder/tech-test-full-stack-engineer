@@ -23,7 +23,7 @@ const shipsController = {
       const cachedShips = await shipService.getShipsFromCache('ships');
 
       if (cachedShips?.length > 0) {
-        console.log('from cache');
+        console.log('Retrieved from cache');
         ships = cachedShips;
       } else {
         const databaseShips = await shipService.getShipsFromDatabase(

@@ -74,19 +74,11 @@ describe('shipsController', () => {
       { ship_id: 'cached_ship1', ship_type: 'cargo' },
       { ship_id: 'cached_ship2', ship_type: 'passenger' },
     ]);
-    // shipService.insertRecordsInDatabaseAndCache.mockResolvedValue([
-    //   { ship_id: 'cached_ship1', ship_type: 'cargo' },
-    //   { ship_id: 'cached_ship2', ship_type: 'passenger' },
-    // ]);
 
     await shipsController.getShips(mockRequest, mockResponse);
 
     expect(shipService.fetchShipsFromSpaceXAPI).toHaveBeenCalled();
     expect(shipService.insertRecordsInDatabaseAndCache).toHaveBeenCalled();
-    expect(cacheMiddleware.cacheData).toHaveBeenCalledWith(
-      'ships',
-      insertedData
-    );
     expect(mockResponse.status).toHaveBeenCalledWith(200);
   });
 

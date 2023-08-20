@@ -17,7 +17,7 @@ If you are applying for a Full Stack Engineer (Backend focus) role, please follo
 
 ## Getting Started
 
-We have provided a bit of boilerplate code that you can use to get started. You are **not** required to use this boilerplate, so feel free to throw it all away and start fresh if you prefer.
+We have provided boilerplate code to get started. You are **not** required to use this boilerplate, so feel free to throw it all away and start fresh if you prefer.
 
 The boilerplate code assumes you have Docker running on your machine. If you do not, they offer easy to install binaries ([Mac](https://docs.docker.com/docker-for-mac/install/)) ([Windows](https://docs.docker.com/docker-for-windows/install/)).
 

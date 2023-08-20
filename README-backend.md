@@ -13,7 +13,7 @@ The dashboard has the following requirements:
 ​
 * Create an API to fetch a list of ships from the local database
 * The API should implement a local cache, which is checked before querying the database
-* If a record is not found in the database, call the spaceX API and store it in the database
+* If a record is not found in the database, call the SpaceX API and store it in the database
 * The API must also be able to filter the response based on the ship type, weight and home port (pagination is a bonus)
 * All API endpoints should be secure from typical threats such as malicious headers and XSS.
 * Validations the input data contained in the reqest for each endpoint.

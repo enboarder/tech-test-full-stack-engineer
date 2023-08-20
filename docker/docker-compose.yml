@@ -51,7 +51,7 @@ services:
     build:
       context: ../server
     volumes:
-      - ../server:/var/lib/server:delegated
+      - ../server:/var/lib/server
     ports:
       - '4000:4000'
     environment:

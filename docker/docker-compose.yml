@@ -18,7 +18,7 @@ services:
     build:
       context: ../client
     volumes:
-      - ../client:/var/lib/client:delegated
+      - ../client:/var/lib/client
     ports:
     - '3000:3000'
     environment:
